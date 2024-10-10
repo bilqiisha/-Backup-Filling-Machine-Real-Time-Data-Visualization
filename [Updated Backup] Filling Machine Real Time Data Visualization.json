@@ -1,0 +1,3937 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 1,
+  "links": [],
+  "panels": [
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 8,
+      "panels": [],
+      "title": "Brake Filling Real Time Data Visualization",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "mssql",
+        "uid": "cdrb28jbjka9sb"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "text",
+            "mode": "fixed"
+          },
+          "fieldMinMax": false,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 12,
+        "x": 0,
+        "y": 1
+      },
+      "id": 27,
+      "options": {
+        "colorMode": "none",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "max"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.1.0",
+      "targets": [
+        {
+          "dataset": "SGMW_GA_PMC",
+          "datasource": {
+            "type": "mssql",
+            "uid": "cdrb28jbjka9sb"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT \r\n    MAX(BK_VAL_RES_FINE_VAC_VAL0) AS \"Max Fine Vacuum\",\r\n    MAX(BK_VAL_RES_LEAK_TEST_VAL0) AS \"Max Leak Test\",\r\n    MAX(BK_VAL_RES_FILL_AMOUNT_VAL0) AS \"Max Fill Amount\"\r\nFROM \r\n    dbo.COMPLINE_BK\r\nWHERE \r\n    timestamp_utc BETWEEN $__timeFrom() AND $__timeTo()\r\n    AND (\r\n        TYPE_NAME_VAL0 LIKE '%$Search%' OR\r\n        VIN_VAL0 LIKE '%$Search%' OR\r\n        BK_VAL_NOM_FINE_VAC_VAL0 LIKE '%$Search%' OR\r\n        BK_VAL_RES_FINE_VAC_VAL0 LIKE '%$Search%' OR\r\n        BK_VAL_NOM_LEAK_TEST_VAL0 LIKE '%$Search%' OR\r\n        BK_VAL_RES_LEAK_TEST_VAL0 LIKE '%$Search%' OR\r\n        BK_VAL_NOM_FILL_AMOUNT_VAL0 LIKE '%$Search%' OR\r\n        BK_VAL_RES_FILL_AMOUNT_VAL0 LIKE '%$Search%' OR\r\n        BK_CYCLE_RESULT_VAL0 LIKE '%$Search%'\r\n    )\r\n    AND TYPE_NAME_VAL0 IN ($type_name)\r\n    AND BK_CYCLE_RESULT_VAL0 IN ($cycle_result);\r\n",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "BK Max",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "mssql",
+        "uid": "cdrb28jbjka9sb"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "text",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 12,
+        "x": 12,
+        "y": 1
+      },
+      "id": 28,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "min"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.1.0",
+      "targets": [
+        {
+          "dataset": "SGMW_GA_PMC",
+          "datasource": {
+            "type": "mssql",
+            "uid": "cdrb28jbjka9sb"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT \r\n    MIN(BK_VAL_RES_FINE_VAC_VAL0) AS \"Min Fine Vacuum\",\r\n    MIN(BK_VAL_RES_LEAK_TEST_VAL0) AS \"Min Leak Test\",\r\n    MIN(BK_VAL_RES_FILL_AMOUNT_VAL0) AS \"Min Fill Amount\"\r\nFROM \r\n    dbo.COMPLINE_BK\r\nWHERE \r\n    timestamp_utc BETWEEN $__timeFrom() AND $__timeTo()\r\n    AND (\r\n        TYPE_NAME_VAL0 LIKE '%$Search%' OR\r\n        VIN_VAL0 LIKE '%$Search%' OR\r\n        BK_VAL_NOM_FINE_VAC_VAL0 LIKE '%$Search%' OR\r\n        BK_VAL_RES_FINE_VAC_VAL0 LIKE '%$Search%' OR\r\n        BK_VAL_NOM_LEAK_TEST_VAL0 LIKE '%$Search%' OR\r\n        BK_VAL_RES_LEAK_TEST_VAL0 LIKE '%$Search%' OR\r\n        BK_VAL_NOM_FILL_AMOUNT_VAL0 LIKE '%$Search%' OR\r\n        BK_VAL_RES_FILL_AMOUNT_VAL0 LIKE '%$Search%' OR\r\n        BK_CYCLE_RESULT_VAL0 LIKE '%$Search%'\r\n    )\r\n    AND TYPE_NAME_VAL0 IN ($type_name)\r\n    AND BK_CYCLE_RESULT_VAL0 IN ($cycle_result);",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "BK Min",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "mssql",
+        "uid": "cdrb28jbjka9sb"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "text",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 12,
+        "x": 0,
+        "y": 5
+      },
+      "id": 29,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.1.0",
+      "targets": [
+        {
+          "dataset": "SGMW_GA_PMC",
+          "datasource": {
+            "type": "mssql",
+            "uid": "cdrb28jbjka9sb"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT \r\n    AVG(BK_VAL_RES_FINE_VAC_VAL0) AS \"Avg Fine Vacuum\",\r\n    AVG(BK_VAL_RES_LEAK_TEST_VAL0) AS \"Avg Leak Test\",\r\n    AVG(BK_VAL_RES_FILL_AMOUNT_VAL0) AS \"Avg Fill Amount\"\r\nFROM \r\n    dbo.COMPLINE_BK\r\nWHERE \r\n    timestamp_utc BETWEEN $__timeFrom() AND $__timeTo()\r\n    AND (\r\n        TYPE_NAME_VAL0 LIKE '%$Search%' OR\r\n        VIN_VAL0 LIKE '%$Search%' OR\r\n        BK_VAL_NOM_FINE_VAC_VAL0 LIKE '%$Search%' OR\r\n        BK_VAL_RES_FINE_VAC_VAL0 LIKE '%$Search%' OR\r\n        BK_VAL_NOM_LEAK_TEST_VAL0 LIKE '%$Search%' OR\r\n        BK_VAL_RES_LEAK_TEST_VAL0 LIKE '%$Search%' OR\r\n        BK_VAL_NOM_FILL_AMOUNT_VAL0 LIKE '%$Search%' OR\r\n        BK_VAL_RES_FILL_AMOUNT_VAL0 LIKE '%$Search%' OR\r\n        BK_CYCLE_RESULT_VAL0 LIKE '%$Search%'\r\n    )\r\n    AND TYPE_NAME_VAL0 IN ($type_name)\r\n    AND BK_CYCLE_RESULT_VAL0 IN ($cycle_result);\r\n",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "BK Avg",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "mssql",
+        "uid": "cdrb28jbjka9sb"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "text",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 12,
+        "x": 12,
+        "y": 5
+      },
+      "id": 36,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "p50"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.1.0",
+      "targets": [
+        {
+          "dataset": "SGMW_GA_PMC",
+          "datasource": {
+            "type": "mssql",
+            "uid": "cdrb28jbjka9sb"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT \r\n    PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY BK_VAL_RES_FINE_VAC_VAL0) OVER (PARTITION BY TYPE_NAME_VAL0, BK_CYCLE_RESULT_VAL0) AS \"Median Fine Vacuum\",\r\n    PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY BK_VAL_RES_LEAK_TEST_VAL0) OVER (PARTITION BY TYPE_NAME_VAL0, BK_CYCLE_RESULT_VAL0) AS \"Median Leak Test\",\r\n    PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY BK_VAL_RES_FILL_AMOUNT_VAL0) OVER (PARTITION BY TYPE_NAME_VAL0, BK_CYCLE_RESULT_VAL0) AS \"Median Fill Amount\"\r\nFROM \r\n    dbo.COMPLINE_BK\r\nWHERE \r\n    timestamp_utc BETWEEN $__timeFrom() AND $__timeTo()\r\n    AND (\r\n        TYPE_NAME_VAL0 LIKE '%$Search%' OR\r\n        VIN_VAL0 LIKE '%$Search%' OR\r\n        BK_VAL_NOM_FINE_VAC_VAL0 LIKE '%$Search%' OR\r\n        BK_VAL_RES_FINE_VAC_VAL0 LIKE '%$Search%' OR\r\n        BK_VAL_NOM_LEAK_TEST_VAL0 LIKE '%$Search%' OR\r\n        BK_VAL_RES_LEAK_TEST_VAL0 LIKE '%$Search%' OR\r\n        BK_VAL_NOM_FILL_AMOUNT_VAL0 LIKE '%$Search%' OR\r\n        BK_VAL_RES_FILL_AMOUNT_VAL0 LIKE '%$Search%' OR\r\n        BK_CYCLE_RESULT_VAL0 LIKE '%$Search%'\r\n    )\r\n    AND TYPE_NAME_VAL0 IN ($type_name)\r\n    AND BK_CYCLE_RESULT_VAL0 IN ($cycle_result);",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "BK Median",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "mssql",
+        "uid": "cdrb28jbjka9sb"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "BK_VAL_NOM_FINE_VAC_VAL0"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Nominal Fine Vacuum"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "BK_VAL_RES_FINE_VAC_VAL0"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Result Fine Vacuum"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "BK_VAL_NOM_LEAK_TEST_VAL0"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Nominal Leak Test"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "BK_VAL_RES_LEAK_TEST_VAL0"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Result Leak Test"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "BK_VAL_NOM_FILL_AMOUNT_VAL0"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Nominal Fill Amount"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "BK_VAL_RES_FILL_AMOUNT_VAL0"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Result Fill Amount"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "BK_CYCLE_RESULT_VAL0"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Brake Cycle Result"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "timestamp_utc"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Time"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "TYPE_NAME_VAL0"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Type Name"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "VIN_VAL0"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "VIN"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 9
+      },
+      "id": 21,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "11.1.0",
+      "targets": [
+        {
+          "dataset": "SGMW_GA_PMC",
+          "datasource": {
+            "type": "mssql",
+            "uid": "cdrb28jbjka9sb"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT\r\n    timestamp_utc,\r\n    TYPE_NAME_VAL0,\r\n    VIN_VAL0,\r\n    BK_VAL_NOM_FINE_VAC_VAL0,\r\n    BK_VAL_RES_FINE_VAC_VAL0,\r\n    BK_VAL_NOM_LEAK_TEST_VAL0,\r\n    BK_VAL_RES_LEAK_TEST_VAL0,\r\n    BK_VAL_NOM_FILL_AMOUNT_VAL0,\r\n    BK_VAL_RES_FILL_AMOUNT_VAL0,\r\n    BK_CYCLE_RESULT_VAL0\r\nFROM\r\n    dbo.COMPLINE_BK\r\nWHERE\r\n    timestamp_utc BETWEEN $__timeFrom() AND $__timeTo()\r\n    AND (\r\n        TYPE_NAME_VAL0 LIKE '%$Search%' OR\r\n        VIN_VAL0 LIKE '%$Search%' OR\r\n        BK_VAL_NOM_FINE_VAC_VAL0 LIKE '%$Search%' OR\r\n        BK_VAL_RES_FINE_VAC_VAL0 LIKE '%$Search%' OR\r\n        BK_VAL_NOM_LEAK_TEST_VAL0 LIKE '%$Search%' OR\r\n        BK_VAL_RES_LEAK_TEST_VAL0 LIKE '%$Search%' OR\r\n        BK_VAL_NOM_FILL_AMOUNT_VAL0 LIKE '%$Search%' OR\r\n        BK_VAL_RES_FILL_AMOUNT_VAL0 LIKE '%$Search%' OR\r\n        BK_CYCLE_RESULT_VAL0 LIKE '%$Search%'\r\n    )\r\n    AND TYPE_NAME_VAL0 IN ($type_name)\r\n    AND BK_CYCLE_RESULT_VAL0 IN ($cycle_result)\r\nORDER BY\r\n    timestamp_utc DESC;",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Compline Brake",
+      "transformations": [
+        {
+          "id": "filterByValue",
+          "options": {
+            "filters": [],
+            "match": "any",
+            "type": "include"
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "mssql",
+        "uid": "cdrb28jbjka9sb"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Nominal"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "yellow",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.lineStyle",
+                "value": {
+                  "dash": [
+                    10,
+                    10
+                  ],
+                  "fill": "dash"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Result"
+            },
+            "properties": [
+              {
+                "id": "custom.fillOpacity",
+                "value": 20
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 17
+      },
+      "id": 10,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "dataset": "SGMW_GA_PMC",
+          "datasource": {
+            "type": "mssql",
+            "uid": "cdrb28jbjka9sb"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT \r\n    BK_VAL_NOM_FINE_VAC_VAL0 AS Nominal, \r\n    BK_VAL_RES_FINE_VAC_VAL0 AS Result, \r\n    TYPE_NAME_VAL0 AS Type,\r\n    timestamp_utc\r\nFROM \r\n    SGMW_GA_PMC.dbo.COMPLINE_BK\r\nWHERE \r\n    $__timeFilter(timestamp_utc)\r\n    AND (COALESCE('${Search}', '') = '' OR TYPE_NAME_VAL0 = '${Search}')\r\n    AND TYPE_NAME_VAL0 IN ($type_name)\r\n    AND BK_CYCLE_RESULT_VAL0 IN ($cycle_result)\r\nORDER BY \r\n    timestamp_utc DESC;",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Brake Fine Vacuum",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "mssql",
+        "uid": "cdrb28jbjka9sb"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Nominal"
+            },
+            "properties": [
+              {
+                "id": "custom.lineStyle",
+                "value": {
+                  "dash": [
+                    10,
+                    10
+                  ],
+                  "fill": "dash"
+                }
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "yellow",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Result"
+            },
+            "properties": [
+              {
+                "id": "custom.fillOpacity",
+                "value": 20
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 17
+      },
+      "id": 7,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "dataset": "SGMW_GA_PMC",
+          "datasource": {
+            "type": "mssql",
+            "uid": "cdrb28jbjka9sb"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT \r\n    BK_VAL_NOM_LEAK_TEST_VAL0 As Nominal, \r\n    BK_VAL_RES_LEAK_TEST_VAL0 As Result, \r\n    TYPE_NAME_VAL0 AS Type,\r\n    timestamp_utc\r\nFROM \r\n    SGMW_GA_PMC.dbo.COMPLINE_BK\r\nWHERE \r\n    $__timeFilter(timestamp_utc)\r\n    AND (COALESCE('${Search}', '') = '' OR TYPE_NAME_VAL0 = '${Search}')\r\n    AND TYPE_NAME_VAL0 IN ($type_name)\r\n    AND BK_CYCLE_RESULT_VAL0 IN ($cycle_result)\r\nORDER BY \r\n    timestamp_utc DESC",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Break Leak Test",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "mssql",
+        "uid": "cdrb28jbjka9sb"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 2,
+            "pointSize": 10,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Nominal"
+            },
+            "properties": [
+              {
+                "id": "custom.lineStyle",
+                "value": {
+                  "dash": [
+                    10,
+                    10
+                  ],
+                  "fill": "dash"
+                }
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "yellow",
+                  "mode": "shades"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Result"
+            },
+            "properties": [
+              {
+                "id": "custom.fillOpacity",
+                "value": 20
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 25
+      },
+      "id": 6,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "dataset": "SGMW_GA_PMC",
+          "datasource": {
+            "type": "mssql",
+            "uid": "cdrb28jbjka9sb"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT \r\n    BK_VAL_NOM_FILL_AMOUNT_VAL0 As Nominal, \r\n    BK_VAL_RES_FILL_AMOUNT_VAL0 As Result, \r\n    TYPE_NAME_VAL0 AS Type,\r\n    VIN_VAL0 As VIN,\r\n    timestamp_utc\r\nFROM \r\n    SGMW_GA_PMC.dbo.COMPLINE_BK\r\nWHERE \r\n    $__timeFilter(timestamp_utc)\r\n    AND (COALESCE('${Search}', '') = '' OR TYPE_NAME_VAL0 = '${Search}')\r\n    AND TYPE_NAME_VAL0 IN ($type_name)\r\n    AND BK_CYCLE_RESULT_VAL0 IN ($cycle_result)\r\nORDER BY \r\n    timestamp_utc DESC",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Brake Filling Amount",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "mssql",
+        "uid": "cdrb28jbjka9sb"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "fillOpacity": 80,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Total Result"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 25
+      },
+      "id": 24,
+      "options": {
+        "barRadius": 0,
+        "barWidth": 0.97,
+        "fullHighlight": false,
+        "groupWidth": 0.7,
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "orientation": "horizontal",
+        "showValue": "auto",
+        "stacking": "none",
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        },
+        "xTickLabelRotation": 0,
+        "xTickLabelSpacing": 0
+      },
+      "targets": [
+        {
+          "dataset": "SGMW_GA_PMC",
+          "datasource": {
+            "type": "mssql",
+            "uid": "cdrb28jbjka9sb"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT \r\n    Result_Description,\r\n    COUNT(*) AS Total_Count\r\nFROM (\r\n    SELECT \r\n        TYPE_NAME_VAL0,\r\n        BK_CYCLE_RESULT_VAL0,\r\n        CASE BK_CYCLE_RESULT_VAL0\r\n            WHEN 1 THEN 'Process OK'\r\n            WHEN 10 THEN 'N.O.K. SYSTEM VACUUM'\r\n            WHEN 11 THEN 'N.O.K. TEST ADAPTER VALVE'\r\n            WHEN 20 THEN 'N.O.K. OVERPRESSURE'\r\n            WHEN 21 THEN 'N.O.K. ADAPTER NOT CLAMPED - VACUUM'\r\n            WHEN 22 THEN 'N.O.K. ADAPTER NOT CLAMPED - POSITION'\r\n            WHEN 23 THEN 'N.O.K. OPEN CAR VALVES'\r\n            WHEN 24 THEN 'N.O.K. PUSH ROD VALVE'\r\n            WHEN 30 THEN 'N.O.K. PRESSURE BUILT-UP'\r\n            WHEN 31 THEN 'N.O.K. PRESSURE LEAK'\r\n            WHEN 32 THEN 'N.O.K. PRESSURE EXHAUST'\r\n            WHEN 33 THEN 'N.O.K. PRESSURE STABILISATION'\r\n            WHEN 34 THEN 'N.O.K. TEST PRESSURE INCREASE IN TANK'\r\n            WHEN 35 THEN 'N.O.K. TANK PRESSURE LIMITS'\r\n            WHEN 40 THEN 'N.O.K. COARSE VACUUM'\r\n            WHEN 41 THEN 'N.O.K. FINE VACUUM'\r\n            WHEN 42 THEN 'N.O.K. VACUUM LEAK TEST'\r\n            WHEN 43 THEN 'N.O.K. POST VACUUM'\r\n            WHEN 44 THEN 'N.O.K. VACUUM TOO QUICK'\r\n            WHEN 45 THEN 'N.O.K. VACUUM STABILISATION'\r\n            WHEN 50 THEN 'N.O.K. FILL PRESSURE'\r\n            WHEN 51 THEN 'N.O.K. FILL AMOUNT'\r\n            WHEN 52 THEN 'N.O.K. FILL TIME'\r\n            WHEN 53 THEN 'N.O.K. FILL ADDI. MEDIUM'\r\n            WHEN 54 THEN 'N.O.K. FILL PRESSURE DECAY'\r\n            WHEN 55 THEN 'N.O.K. TANK PRESSURE'\r\n            WHEN 56 THEN 'N.O.K. FILL TIME AUX. RESERVOIR'\r\n            WHEN 57 THEN 'N.O.K. FILL AMOUNT AUX. RESERVOIR'\r\n            WHEN 58 THEN 'N.O.K. RESIDUAL AIR'\r\n            WHEN 59 THEN 'N.O.K. COUNTER NOT RUNNING'\r\n            WHEN 60 THEN 'N.O.K. COUNTER NOT STANDING STILL'\r\n            WHEN 61 THEN 'N.O.K. LEAK TEST FILL VALVES'\r\n            WHEN 62 THEN 'N.O.K. LEAK TEST CAR VALVES'\r\n            WHEN 63 THEN 'N.O.K. RESET COUNTER'\r\n            WHEN 64 THEN 'N.O.K. RESET COUNTER EXT. RES.'\r\n            WHEN 65 THEN 'N.O.K. FILLING PRESSURE 1'\r\n            WHEN 66 THEN 'N.O.K. FILLING HIGH PRESSURE'\r\n            WHEN 67 THEN 'N.O.K. FILLING PRESSURE 2'\r\n            WHEN 68 THEN 'N.O.K. FILLING DOSING'\r\n            WHEN 69 THEN 'N.O.K. MAX. FILLING VOLUME'\r\n            WHEN 70 THEN 'N.O.K. FILLING PRE STEP'\r\n            WHEN 80 THEN 'N.O.K. ABS FAULT'\r\n            WHEN 81 THEN 'N.O.K. ABS COMMUNICATION'\r\n            WHEN 82 THEN 'N.O.K. ABS SWITCHING NOT STARTED'\r\n            WHEN 83 THEN 'N.O.K. ABS SWITCHING STOPPED IN VACUUM'\r\n            WHEN 84 THEN 'N.O.K. ABS SWITCHING STOPPED IN FILLING'\r\n            WHEN 85 THEN 'N.O.K. ABS SWITCHING STOPPED IN VACUUM (TRW1)'\r\n            WHEN 86 THEN 'N.O.K. ABS SWITCHING STOPPED IN VACUUM (TRW2)'\r\n            WHEN 87 THEN 'N.O.K. CYCLE INTERRUPT FROM VPORT'\r\n            WHEN 88 THEN 'N.O.K. ABS END MISSING'\r\n            WHEN 89 THEN 'N.O.K. ABS FROM VPORT'\r\n            WHEN 90 THEN 'N.O.K. (VPORT) BCM NOT ACTIVATED'\r\n            WHEN 91 THEN 'ERROR WRONG ABS MODULE'\r\n            WHEN 92 THEN 'ERROR CLUTCH NOT IN HOME POSITION'\r\n            WHEN 96 THEN 'N.O.K. WITHOUT FILL'\r\n            WHEN 97 THEN 'N.O.K. COUNTER MODULE'\r\n            WHEN 98 THEN 'N.O.K. USER STOP'\r\n            WHEN 99 THEN 'N.O.K. EQUIPMENT ERROR'\r\n            WHEN 101 THEN 'ERROR SYSTEM VACUUM'\r\n            WHEN 102 THEN 'ERROR ADAPTER VALVE'\r\n            WHEN 103 THEN 'N.O.K. WATER CONTENT'\r\n            WHEN 104 THEN 'ERROR LEAKTEST AT START ON'\r\n            WHEN 105 THEN 'ADD. VACUUM - AERATION'\r\n            WHEN 110 THEN 'ONLY PAG-OIL FILLING SELECTED!'\r\n            WHEN 111 THEN 'PAG-OIL FILLING FINISHED - CONFIRM CLEANING!'\r\n            WHEN 112 THEN 'PAG-OIL FINISHED - PRESS AD. START TO CLEAN ADAPTER!'\r\n            ELSE 'UNKNOWN'\r\n        END AS Result_Description\r\n    FROM dbo.COMPLINE_BK\r\n    WHERE $__timeFilter(timestamp_utc)\r\n      AND (COALESCE('${Search}', '') = '' OR TYPE_NAME_VAL0 = '${Search}')\r\n      AND TYPE_NAME_VAL0 IN ($type_name)\r\n      AND BK_CYCLE_RESULT_VAL0 IN ($cycle_result)\r\n) AS Results\r\nGROUP BY Result_Description\r\nORDER BY Total_Count DESC;",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Brake Cycle Result",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "FaultName": false,
+              "FaultValue": true,
+              "Type": false,
+              "VIN": false
+            },
+            "includeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "FaultName": "Fault Name",
+              "FaultValue": "",
+              "Result_Description": "Result Description",
+              "TotalCount": "Total Result",
+              "Total_Count": "Total Result",
+              "Type": ""
+            }
+          }
+        }
+      ],
+      "type": "barchart"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 33
+      },
+      "id": 11,
+      "panels": [],
+      "title": "AC Filling Real Time Data Visualization",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "mssql",
+        "uid": "cdrb28jbjka9sb"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "text",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 12,
+        "x": 0,
+        "y": 34
+      },
+      "id": 30,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "max"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.1.0",
+      "targets": [
+        {
+          "dataset": "SGMW_GA_PMC",
+          "datasource": {
+            "type": "mssql",
+            "uid": "cdrb28jbjka9sb"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT \r\n    MAX(AC_VAL_RES_FINE_VAC_VAL0) AS \"Max Fine Vacuum\",\r\n    MAX(AC_VAL_RES_LEAK_TEST_VAL0) AS \"Max Leak Test\",\r\n    MAX(AC_VAL_RES_FILL_AMOUNT_VAL0) AS \"Max Fill Amount\"\r\nFROM \r\n    dbo.COMPLINE_AC\r\nWHERE \r\n    timestamp_utc BETWEEN $__timeFrom() AND $__timeTo()\r\n    AND (\r\n        AC_TYPE_NAME_VAL0 LIKE '%$Search%' OR\r\n        AC_VIN_VAL0 LIKE '%$Search%' OR\r\n        AC_VAL_NOM_FINE_VAC_VAL0 LIKE '%$Search%' OR\r\n        AC_VAL_RES_FINE_VAC_VAL0 LIKE '%$Search%' OR\r\n        AC_VAL_NOM_LEAK_TEST_VAL0 LIKE '%$Search%' OR\r\n        AC_VAL_RES_LEAK_TEST_VAL0 LIKE '%$Search%' OR\r\n        AC_VAL_NOM_FILL_AMOUNT_VAL0 LIKE '%$Search%' OR\r\n        AC_VAL_RES_FILL_AMOUNT_VAL0 LIKE '%$Search%' OR\r\n        AC_CYCLE_RESULT_VAL0 LIKE '%$Search%'\r\n    )\r\n    AND AC_TYPE_NAME_VAL0 IN ($type_name)\r\n    AND AC_CYCLE_RESULT_VAL0 IN ($cycle_result);",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "AC Max",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "mssql",
+        "uid": "cdrb28jbjka9sb"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "text",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 12,
+        "x": 12,
+        "y": 34
+      },
+      "id": 31,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "min"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.1.0",
+      "targets": [
+        {
+          "dataset": "SGMW_GA_PMC",
+          "datasource": {
+            "type": "mssql",
+            "uid": "cdrb28jbjka9sb"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT \r\n    MIN(AC_VAL_RES_FINE_VAC_VAL0) AS \"Min Fine Vacuum\",\r\n    MIN(AC_VAL_RES_LEAK_TEST_VAL0) AS \"Min Leak Test\",\r\n    MIN(AC_VAL_RES_FILL_AMOUNT_VAL0) AS \"Min Fill Amount\"\r\nFROM \r\n    dbo.COMPLINE_AC\r\nWHERE \r\n    timestamp_utc BETWEEN $__timeFrom() AND $__timeTo()\r\n    AND (\r\n        AC_TYPE_NAME_VAL0 LIKE '%$Search%' OR\r\n        AC_VIN_VAL0 LIKE '%$Search%' OR\r\n        AC_VAL_NOM_FINE_VAC_VAL0 LIKE '%$Search%' OR\r\n        AC_VAL_RES_FINE_VAC_VAL0 LIKE '%$Search%' OR\r\n        AC_VAL_NOM_LEAK_TEST_VAL0 LIKE '%$Search%' OR\r\n        AC_VAL_RES_LEAK_TEST_VAL0 LIKE '%$Search%' OR\r\n        AC_VAL_NOM_FILL_AMOUNT_VAL0 LIKE '%$Search%' OR\r\n        AC_VAL_RES_FILL_AMOUNT_VAL0 LIKE '%$Search%' OR\r\n        AC_CYCLE_RESULT_VAL0 LIKE '%$Search%'\r\n    )\r\n    AND AC_TYPE_NAME_VAL0 IN ($type_name)\r\n    AND AC_CYCLE_RESULT_VAL0 IN ($cycle_result);",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "AC Min",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "mssql",
+        "uid": "cdrb28jbjka9sb"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "text",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 12,
+        "x": 0,
+        "y": 38
+      },
+      "id": 32,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.1.0",
+      "targets": [
+        {
+          "dataset": "SGMW_GA_PMC",
+          "datasource": {
+            "type": "mssql",
+            "uid": "cdrb28jbjka9sb"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT \r\n    AVG(AC_VAL_RES_FINE_VAC_VAL0) AS \"Avg Fine Vacuum\",\r\n    AVG(AC_VAL_RES_LEAK_TEST_VAL0) AS \"Avg Leak Test\",\r\n    AVG(AC_VAL_RES_FILL_AMOUNT_VAL0) AS \"Avg Fill Amount\"\r\nFROM \r\n    dbo.COMPLINE_AC\r\nWHERE \r\n    timestamp_utc BETWEEN $__timeFrom() AND $__timeTo()\r\n    AND (\r\n        AC_TYPE_NAME_VAL0 LIKE '%$Search%' OR\r\n        AC_VIN_VAL0 LIKE '%$Search%' OR\r\n        AC_VAL_NOM_FINE_VAC_VAL0 LIKE '%$Search%' OR\r\n        AC_VAL_RES_FINE_VAC_VAL0 LIKE '%$Search%' OR\r\n        AC_VAL_NOM_LEAK_TEST_VAL0 LIKE '%$Search%' OR\r\n        AC_VAL_RES_LEAK_TEST_VAL0 LIKE '%$Search%' OR\r\n        AC_VAL_NOM_FILL_AMOUNT_VAL0 LIKE '%$Search%' OR\r\n        AC_VAL_RES_FILL_AMOUNT_VAL0 LIKE '%$Search%' OR\r\n        AC_CYCLE_RESULT_VAL0 LIKE '%$Search%'\r\n    )\r\n    AND AC_TYPE_NAME_VAL0 IN ($type_name)\r\n    AND AC_CYCLE_RESULT_VAL0 IN ($cycle_result);",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "AC Avg",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "mssql",
+        "uid": "cdrb28jbjka9sb"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "text",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 12,
+        "x": 12,
+        "y": 38
+      },
+      "id": 37,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "p50"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.1.0",
+      "targets": [
+        {
+          "dataset": "SGMW_GA_PMC",
+          "datasource": {
+            "type": "mssql",
+            "uid": "cdrb28jbjka9sb"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT \r\n    PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY AC_VAL_RES_FINE_VAC_VAL0) OVER (PARTITION BY AC_TYPE_NAME_VAL0, AC_CYCLE_RESULT_VAL0) AS \"Median Fine Vacuum\",\r\n    PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY AC_VAL_RES_LEAK_TEST_VAL0) OVER (PARTITION BY AC_TYPE_NAME_VAL0, AC_CYCLE_RESULT_VAL0) AS \"Median Leak Test\",\r\n    PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY AC_VAL_RES_FILL_AMOUNT_VAL0) OVER (PARTITION BY AC_TYPE_NAME_VAL0, AC_CYCLE_RESULT_VAL0) AS \"Median Fill Amount\"\r\nFROM \r\n    dbo.COMPLINE_AC\r\nWHERE \r\n    timestamp_utc BETWEEN $__timeFrom() AND $__timeTo()\r\n    AND (\r\n        AC_TYPE_NAME_VAL0 LIKE '%$Search%' OR\r\n        AC_VIN_VAL0 LIKE '%$Search%' OR\r\n        AC_VAL_NOM_FINE_VAC_VAL0 LIKE '%$Search%' OR\r\n        AC_VAL_RES_FINE_VAC_VAL0 LIKE '%$Search%' OR\r\n        AC_VAL_NOM_LEAK_TEST_VAL0 LIKE '%$Search%' OR\r\n        AC_VAL_RES_LEAK_TEST_VAL0 LIKE '%$Search%' OR\r\n        AC_VAL_NOM_FILL_AMOUNT_VAL0 LIKE '%$Search%' OR\r\n        AC_VAL_RES_FILL_AMOUNT_VAL0 LIKE '%$Search%' OR\r\n        AC_CYCLE_RESULT_VAL0 LIKE '%$Search%'\r\n    )\r\n    AND AC_TYPE_NAME_VAL0 IN ($type_name)\r\n    AND AC_CYCLE_RESULT_VAL0 IN ($cycle_result);",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "AC Median",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "mssql",
+        "uid": "cdrb28jbjka9sb"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "AC_VAL_NOM_FINE_VAC_VAL0"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Nominal Fine Vacuum"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "AC_VAL_RES_FINE_VAC_VAL0"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Result Fine Vacuum"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "AC_VAL_NOM_LEAK_TEST_VAL0"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Nominal Leak Test"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "AC_VAL_RES_LEAK_TEST_VAL0"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Result Leak Test"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "AC_VAL_NOM_FILL_AMOUNT_VAL0"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Nominal Fill Amount"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "AC_VAL_RES_FILL_AMOUNT_VAL0"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Result Fill Amount"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "AC_CYCLE_RESULT_VAL0"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "AC Cycle Result"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "timestamp_utc"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Time"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "AC_TYPE_NAME_VAL0"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Type Name"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "AC_VIN_VAL0"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "VIN"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 42
+      },
+      "id": 22,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "11.1.0",
+      "targets": [
+        {
+          "dataset": "SGMW_GA_PMC",
+          "datasource": {
+            "type": "mssql",
+            "uid": "cdrb28jbjka9sb"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT\r\n    timestamp_utc,\r\n    AC_TYPE_NAME_VAL0,\r\n    AC_VIN_VAL0,\r\n    AC_VAL_NOM_FINE_VAC_VAL0,\r\n    AC_VAL_RES_FINE_VAC_VAL0,\r\n    AC_VAL_NOM_LEAK_TEST_VAL0,\r\n    AC_VAL_RES_LEAK_TEST_VAL0,\r\n    AC_VAL_NOM_FILL_AMOUNT_VAL0,\r\n    AC_VAL_RES_FILL_AMOUNT_VAL0,\r\n    AC_CYCLE_RESULT_VAL0\r\nFROM \r\n    dbo.COMPLINE_AC\r\nWHERE \r\n    timestamp_utc BETWEEN $__timeFrom() AND $__timeTo()\r\n    AND (\r\n        AC_TYPE_NAME_VAL0 LIKE '%$Search%' OR\r\n        AC_VIN_VAL0 LIKE '%$Search%' OR\r\n        AC_VAL_NOM_FINE_VAC_VAL0 LIKE '%$Search%' OR\r\n        AC_VAL_RES_FINE_VAC_VAL0 LIKE '%$Search%' OR\r\n        AC_VAL_NOM_LEAK_TEST_VAL0 LIKE '%$Search%' OR\r\n        AC_VAL_RES_LEAK_TEST_VAL0 LIKE '%$Search%' OR\r\n        AC_VAL_NOM_FILL_AMOUNT_VAL0 LIKE '%$Search%' OR\r\n        AC_VAL_RES_FILL_AMOUNT_VAL0 LIKE '%$Search%' OR\r\n        AC_CYCLE_RESULT_VAL0 LIKE '%$Search%'\r\n    )\r\n    AND AC_TYPE_NAME_VAL0 IN ($type_name)\r\n    AND AC_CYCLE_RESULT_VAL0 IN ($cycle_result)\r\nORDER BY \r\n    timestamp_utc DESC;",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Compline AC",
+      "transformations": [
+        {
+          "id": "filterByValue",
+          "options": {}
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "mssql",
+        "uid": "cdrb28jbjka9sb"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Nominal"
+            },
+            "properties": [
+              {
+                "id": "custom.lineStyle",
+                "value": {
+                  "dash": [
+                    10,
+                    10
+                  ],
+                  "fill": "dash"
+                }
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "yellow",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Result"
+            },
+            "properties": [
+              {
+                "id": "custom.fillOpacity",
+                "value": 20
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 50
+      },
+      "id": 13,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "dataset": "SGMW_GA_PMC",
+          "datasource": {
+            "type": "mssql",
+            "uid": "cdrb28jbjka9sb"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT \r\n    AC_VAL_NOM_FINE_VAC_VAL0 As Nominal, \r\n    AC_VAL_RES_FINE_VAC_VAL0 As Result,\r\n    AC_TYPE_NAME_VAL0 As Type,\r\n    AC_VIN_VAL0 As VIN,\r\n    timestamp_utc\r\nFROM \r\n    SGMW_GA_PMC.dbo.COMPLINE_AC\r\nWHERE \r\n    $__timeFilter(timestamp_utc)\r\n    AND (COALESCE('${Search}', '') = '' OR AC_TYPE_NAME_VAL0 = '${Search}')\r\n    AND AC_TYPE_NAME_VAL0 IN ($type_name)\r\n    AND AC_CYCLE_RESULT_VAL0 IN ($cycle_result)\r\nORDER BY \r\n    timestamp_utc DESC\r\n",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "AC Fine Vacuum",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "mssql",
+        "uid": "cdrb28jbjka9sb"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Nominal"
+            },
+            "properties": [
+              {
+                "id": "custom.lineStyle",
+                "value": {
+                  "dash": [
+                    10,
+                    10
+                  ],
+                  "fill": "dash"
+                }
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "yellow",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Result"
+            },
+            "properties": [
+              {
+                "id": "custom.fillOpacity",
+                "value": 20
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 50
+      },
+      "id": 14,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "dataset": "SGMW_GA_PMC",
+          "datasource": {
+            "type": "mssql",
+            "uid": "cdrb28jbjka9sb"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT \r\n    AC_VAL_NOM_LEAK_TEST_VAL0 As Nominal, \r\n    AC_VAL_RES_LEAK_TEST_VAL0 As Result,\r\n    AC_TYPE_NAME_VAL0 As Type,\r\n    AC_VIN_VAL0 As VIN,\r\n    timestamp_utc\r\nFROM \r\n    SGMW_GA_PMC.dbo.COMPLINE_AC\r\nWHERE \r\n    $__timeFilter(timestamp_utc)\r\n    AND (COALESCE('${Search}', '') = '' OR AC_TYPE_NAME_VAL0 = '${Search}')\r\n    AND AC_TYPE_NAME_VAL0 IN ($type_name)\r\n    AND AC_CYCLE_RESULT_VAL0 IN ($cycle_result)\r\nORDER BY \r\n    timestamp_utc DESC",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "AC Leak Test",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "mssql",
+        "uid": "cdrb28jbjka9sb"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Nominal"
+            },
+            "properties": [
+              {
+                "id": "custom.lineStyle",
+                "value": {
+                  "dash": [
+                    10,
+                    10
+                  ],
+                  "fill": "dash"
+                }
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "yellow",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Result"
+            },
+            "properties": [
+              {
+                "id": "custom.fillOpacity",
+                "value": 20
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 58
+      },
+      "id": 15,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "dataset": "SGMW_GA_PMC",
+          "datasource": {
+            "type": "mssql",
+            "uid": "cdrb28jbjka9sb"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT \r\n    AC_VAL_NOM_FILL_AMOUNT_VAL0 As Nominal, \r\n    AC_VAL_RES_FILL_AMOUNT_VAL0 As Result,\r\n    AC_TYPE_NAME_VAL0 As Type,\r\n    AC_VIN_VAL0 As VIN, \r\n    timestamp_utc\r\nFROM \r\n    SGMW_GA_PMC.dbo.COMPLINE_AC\r\nWHERE \r\n    $__timeFilter(timestamp_utc)\r\n    AND (COALESCE('${Search}', '') = '' OR AC_TYPE_NAME_VAL0 = '${Search}')\r\n    AND AC_TYPE_NAME_VAL0 IN ($type_name)\r\n    AND AC_CYCLE_RESULT_VAL0 IN ($cycle_result)\r\nORDER BY \r\n    timestamp_utc DESC",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "AC Filling Amount",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "mssql",
+        "uid": "cdrb28jbjka9sb"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "fillOpacity": 80,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Total_Count"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 58
+      },
+      "id": 25,
+      "options": {
+        "barRadius": 0,
+        "barWidth": 0.97,
+        "fullHighlight": false,
+        "groupWidth": 0.7,
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "orientation": "horizontal",
+        "showValue": "auto",
+        "stacking": "none",
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        },
+        "xTickLabelRotation": 0,
+        "xTickLabelSpacing": 0
+      },
+      "targets": [
+        {
+          "dataset": "SGMW_GA_PMC",
+          "datasource": {
+            "type": "mssql",
+            "uid": "cdrb28jbjka9sb"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT \r\n    Result_Description,\r\n    COUNT(*) AS Total_Count\r\nFROM (\r\n    SELECT \r\n        AC_TYPE_NAME_VAL0,\r\n        AC_CYCLE_RESULT_VAL0,\r\n        CASE AC_CYCLE_RESULT_VAL0\r\n            WHEN 1 THEN 'Process OK'\r\n            WHEN 10 THEN 'N.O.K. SYSTEM VACUUM'\r\n            WHEN 11 THEN 'N.O.K. TEST ADAPTER VALVE'\r\n            WHEN 20 THEN 'N.O.K. OVERPRESSURE'\r\n            WHEN 21 THEN 'N.O.K. ADAPTER NOT CLAMPED - VACUUM'\r\n            WHEN 22 THEN 'N.O.K. ADAPTER NOT CLAMPED - POSITION'\r\n            WHEN 23 THEN 'N.O.K. OPEN CAR VALVES'\r\n            WHEN 24 THEN 'N.O.K. PUSH ROD VALVE'\r\n            WHEN 30 THEN 'N.O.K. PRESSURE BUILT-UP'\r\n            WHEN 31 THEN 'N.O.K. PRESSURE LEAK'\r\n            WHEN 32 THEN 'N.O.K. PRESSURE EXHAUST'\r\n            WHEN 33 THEN 'N.O.K. PRESSURE STABILISATION'\r\n            WHEN 34 THEN 'N.O.K. TEST PRESSURE INCREASE IN TANK'\r\n            WHEN 35 THEN 'N.O.K. TANK PRESSURE LIMITS'\r\n            WHEN 40 THEN 'N.O.K. COARSE VACUUM'\r\n            WHEN 41 THEN 'N.O.K. FINE VACUUM'\r\n            WHEN 42 THEN 'N.O.K. VACUUM LEAK TEST'\r\n            WHEN 43 THEN 'N.O.K. POST VACUUM'\r\n            WHEN 44 THEN 'N.O.K. VACUUM TOO QUICK'\r\n            WHEN 45 THEN 'N.O.K. VACUUM STABILISATION'\r\n            WHEN 50 THEN 'N.O.K. FILL PRESSURE'\r\n            WHEN 51 THEN 'N.O.K. FILL AMOUNT'\r\n            WHEN 52 THEN 'N.O.K. FILL TIME'\r\n            WHEN 53 THEN 'N.O.K. FILL ADDI. MEDIUM'\r\n            WHEN 54 THEN 'N.O.K. FILL PRESSURE DECAY'\r\n            WHEN 55 THEN 'N.O.K. TANK PRESSURE'\r\n            WHEN 56 THEN 'N.O.K. FILL TIME AUX. RESERVOIR'\r\n            WHEN 57 THEN 'N.O.K. FILL AMOUNT AUX. RESERVOIR'\r\n            WHEN 58 THEN 'N.O.K. RESIDUAL AIR'\r\n            WHEN 59 THEN 'N.O.K. COUNTER NOT RUNNING'\r\n            WHEN 60 THEN 'N.O.K. COUNTER NOT STANDING STILL'\r\n            WHEN 61 THEN 'N.O.K. LEAK TEST FILL VALVES'\r\n            WHEN 62 THEN 'N.O.K. LEAK TEST CAR VALVES'\r\n            WHEN 63 THEN 'N.O.K. RESET COUNTER'\r\n            WHEN 64 THEN 'N.O.K. RESET COUNTER EXT. RES.'\r\n            WHEN 65 THEN 'N.O.K. FILLING PRESSURE 1'\r\n            WHEN 66 THEN 'N.O.K. FILLING HIGH PRESSURE'\r\n            WHEN 67 THEN 'N.O.K. FILLING PRESSURE 2'\r\n            WHEN 68 THEN 'N.O.K. FILLING DOSING'\r\n            WHEN 69 THEN 'N.O.K. MAX. FILLING VOLUME'\r\n            WHEN 70 THEN 'N.O.K. FILLING PRE STEP'\r\n            WHEN 80 THEN 'N.O.K. ABS FAULT'\r\n            WHEN 81 THEN 'N.O.K. ABS COMMUNICATION'\r\n            WHEN 82 THEN 'N.O.K. ABS SWITCHING NOT STARTED'\r\n            WHEN 83 THEN 'N.O.K. ABS SWITCHING STOPPED IN VACUUM'\r\n            WHEN 84 THEN 'N.O.K. ABS SWITCHING STOPPED IN FILLING'\r\n            WHEN 85 THEN 'N.O.K. ABS SWITCHING STOPPED IN VACUUM (TRW1)'\r\n            WHEN 86 THEN 'N.O.K. ABS SWITCHING STOPPED IN VACUUM (TRW2)'\r\n            WHEN 87 THEN 'N.O.K. CYCLE INTERRUPT FROM VPORT'\r\n            WHEN 88 THEN 'N.O.K. ABS END MISSING'\r\n            WHEN 89 THEN 'N.O.K. ABS FROM VPORT'\r\n            WHEN 90 THEN 'N.O.K. (VPORT) BCM NOT ACTIVATED'\r\n            WHEN 91 THEN 'ERROR WRONG ABS MODULE'\r\n            WHEN 92 THEN 'ERROR CLUTCH NOT IN HOME POSITION'\r\n            WHEN 96 THEN 'N.O.K. WITHOUT FILL'\r\n            WHEN 97 THEN 'N.O.K. COUNTER MODULE'\r\n            WHEN 98 THEN 'N.O.K. USER STOP'\r\n            WHEN 99 THEN 'N.O.K. EQUIPMENT ERROR'\r\n            WHEN 101 THEN 'ERROR SYSTEM VACUUM'\r\n            WHEN 102 THEN 'ERROR ADAPTER VALVE'\r\n            WHEN 103 THEN 'N.O.K. WATER CONTENT'\r\n            WHEN 104 THEN 'ERROR LEAKTEST AT START ON'\r\n            WHEN 105 THEN 'ADD. VACUUM - AERATION'\r\n            WHEN 110 THEN 'ONLY PAG-OIL FILLING SELECTED!'\r\n            WHEN 111 THEN 'PAG-OIL FILLING FINISHED - CONFIRM CLEANING!'\r\n            WHEN 112 THEN 'PAG-OIL FINISHED - PRESS AD. START TO CLEAN ADAPTER!'\r\n            ELSE 'UNKNOWN'\r\n        END AS Result_Description\r\n    FROM dbo.COMPLINE_AC\r\n    WHERE $__timeFilter(timestamp_utc)\r\n      AND (COALESCE('${Search}', '') = '' OR AC_TYPE_NAME_VAL0 = '${Search}')\r\n      AND AC_TYPE_NAME_VAL0 IN ($type_name)\r\n      AND AC_CYCLE_RESULT_VAL0 IN ($cycle_result)\r\n) AS Results\r\nGROUP BY Result_Description\r\nORDER BY Total_Count DESC;",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "AC Cycle Result",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "FaultName": false,
+              "FaultValue": true
+            },
+            "includeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "FaultName": "Fault Name",
+              "Result_Description": "Result Description",
+              "TotalCount": "Total Fault",
+              "Total_Count": "Total Result"
+            }
+          }
+        }
+      ],
+      "type": "barchart"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 66
+      },
+      "id": 16,
+      "panels": [],
+      "title": "Radiator Filling Real Time Data Visualization",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "mssql",
+        "uid": "cdrb28jbjka9sb"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "text",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 12,
+        "x": 0,
+        "y": 67
+      },
+      "id": 33,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "max"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.1.0",
+      "targets": [
+        {
+          "dataset": "SGMW_GA_PMC",
+          "datasource": {
+            "type": "mssql",
+            "uid": "cdrb28jbjka9sb"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT \r\n    MAX(RAD_VAL_RES_FINE_VAC_VAL0) AS \"Max Fine Vacuum\",\r\n    MAX(RAD_VAL_RES_LEAK_TEST_VAL0) AS \"Max Leak Test\",\r\n    MAX(RAD_VAL_RES_FILL_AMOUNT_VAL0) AS \"Max Fill Amount\"\r\nFROM \r\n    dbo.COMPLINE_RAD1\r\nWHERE \r\n    timestamp_utc BETWEEN $__timeFrom() AND $__timeTo()\r\n    AND (\r\n        RAD_TYPE_NAME_VAL0 LIKE '%$Search%' OR\r\n        RAD_VIN_VAL0 LIKE '%$Search%' OR\r\n        RAD_VAL_NOM_FINE_VAC_VAL0 LIKE '%$Search%' OR\r\n        RAD_VAL_RES_FINE_VAC_VAL0 LIKE '%$Search%' OR\r\n        RAD_VAL_NOM_LEAK_TEST_VAL0 LIKE '%$Search%' OR\r\n        RAD_VAL_RES_LEAK_TEST_VAL0 LIKE '%$Search%' OR\r\n        RAD_VAL_NOM_FILL_AMOUNT_VAL0 LIKE '%$Search%' OR\r\n        RAD_VAL_RES_FILL_AMOUNT_VAL0 LIKE '%$Search%' OR\r\n        RAD_CYCLE_RESULT_VAL0 LIKE '%$Search%'\r\n    )\r\n    AND RAD_TYPE_NAME_VAL0 IN ($type_name)\r\n    AND RAD_CYCLE_RESULT_VAL0 IN ($cycle_result);",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "RAD Max",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "mssql",
+        "uid": "cdrb28jbjka9sb"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "text",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 12,
+        "x": 12,
+        "y": 67
+      },
+      "id": 34,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "min"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.1.0",
+      "targets": [
+        {
+          "dataset": "SGMW_GA_PMC",
+          "datasource": {
+            "type": "mssql",
+            "uid": "cdrb28jbjka9sb"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT \r\n    MIN(RAD_VAL_RES_FINE_VAC_VAL0) AS \"Min Fine Vacuum\",\r\n    MIN(RAD_VAL_RES_LEAK_TEST_VAL0) AS \"Min Leak Test\",\r\n    MIN(RAD_VAL_RES_FILL_AMOUNT_VAL0) AS \"Min Fill Amount\"\r\nFROM \r\n    dbo.COMPLINE_RAD1\r\nWHERE \r\n    timestamp_utc BETWEEN $__timeFrom() AND $__timeTo()\r\n    AND (\r\n        RAD_TYPE_NAME_VAL0 LIKE '%$Search%' OR\r\n        RAD_VIN_VAL0 LIKE '%$Search%' OR\r\n        RAD_VAL_NOM_FINE_VAC_VAL0 LIKE '%$Search%' OR\r\n        RAD_VAL_RES_FINE_VAC_VAL0 LIKE '%$Search%' OR\r\n        RAD_VAL_NOM_LEAK_TEST_VAL0 LIKE '%$Search%' OR\r\n        RAD_VAL_RES_LEAK_TEST_VAL0 LIKE '%$Search%' OR\r\n        RAD_VAL_NOM_FILL_AMOUNT_VAL0 LIKE '%$Search%' OR\r\n        RAD_VAL_RES_FILL_AMOUNT_VAL0 LIKE '%$Search%' OR\r\n        RAD_CYCLE_RESULT_VAL0 LIKE '%$Search%'\r\n    )\r\n    AND RAD_TYPE_NAME_VAL0 IN ($type_name)\r\n    AND RAD_CYCLE_RESULT_VAL0 IN ($cycle_result);",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "RAD Min",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "mssql",
+        "uid": "cdrb28jbjka9sb"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "text",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 12,
+        "x": 0,
+        "y": 71
+      },
+      "id": 35,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.1.0",
+      "targets": [
+        {
+          "dataset": "SGMW_GA_PMC",
+          "datasource": {
+            "type": "mssql",
+            "uid": "cdrb28jbjka9sb"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT \r\n    AVG(RAD_VAL_RES_FINE_VAC_VAL0) AS \"Avg Fine Vacuum\",\r\n    AVG(RAD_VAL_RES_LEAK_TEST_VAL0) AS \"Avg Leak Test\",\r\n    AVG(RAD_VAL_RES_FILL_AMOUNT_VAL0) AS \"Avg Fill Amount\"\r\nFROM \r\n    dbo.COMPLINE_RAD1\r\nWHERE \r\n    timestamp_utc BETWEEN $__timeFrom() AND $__timeTo()\r\n    AND (\r\n        RAD_TYPE_NAME_VAL0 LIKE '%$Search%' OR\r\n        RAD_VIN_VAL0 LIKE '%$Search%' OR\r\n        RAD_VAL_NOM_FINE_VAC_VAL0 LIKE '%$Search%' OR\r\n        RAD_VAL_RES_FINE_VAC_VAL0 LIKE '%$Search%' OR\r\n        RAD_VAL_NOM_LEAK_TEST_VAL0 LIKE '%$Search%' OR\r\n        RAD_VAL_RES_LEAK_TEST_VAL0 LIKE '%$Search%' OR\r\n        RAD_VAL_NOM_FILL_AMOUNT_VAL0 LIKE '%$Search%' OR\r\n        RAD_VAL_RES_FILL_AMOUNT_VAL0 LIKE '%$Search%' OR\r\n        RAD_CYCLE_RESULT_VAL0 LIKE '%$Search%'\r\n    )\r\n    AND RAD_TYPE_NAME_VAL0 IN ($type_name)\r\n    AND RAD_CYCLE_RESULT_VAL0 IN ($cycle_result);",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "RAD Avg",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "mssql",
+        "uid": "cdrb28jbjka9sb"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "text",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 12,
+        "x": 12,
+        "y": 71
+      },
+      "id": 38,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "p50"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.1.0",
+      "targets": [
+        {
+          "dataset": "SGMW_GA_PMC",
+          "datasource": {
+            "type": "mssql",
+            "uid": "cdrb28jbjka9sb"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT \r\n    PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY RAD_VAL_RES_FINE_VAC_VAL0) OVER (PARTITION BY RAD_TYPE_NAME_VAL0, RAD_CYCLE_RESULT_VAL0) AS \"Median Fine Vacuum\",\r\n    PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY RAD_VAL_RES_LEAK_TEST_VAL0) OVER (PARTITION BY RAD_TYPE_NAME_VAL0, RAD_CYCLE_RESULT_VAL0) AS \"Median Leak Test\",\r\n    PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY RAD_VAL_RES_FILL_AMOUNT_VAL0) OVER (PARTITION BY RAD_TYPE_NAME_VAL0, RAD_CYCLE_RESULT_VAL0) AS \"Median Fill Amount\"\r\nFROM \r\n    dbo.COMPLINE_RAD1\r\nWHERE \r\n    timestamp_utc BETWEEN $__timeFrom() AND $__timeTo()\r\n    AND (\r\n        RAD_TYPE_NAME_VAL0 LIKE '%$Search%' OR\r\n        RAD_VIN_VAL0 LIKE '%$Search%' OR\r\n        RAD_VAL_NOM_FINE_VAC_VAL0 LIKE '%$Search%' OR\r\n        RAD_VAL_RES_FINE_VAC_VAL0 LIKE '%$Search%' OR\r\n        RAD_VAL_NOM_LEAK_TEST_VAL0 LIKE '%$Search%' OR\r\n        RAD_VAL_RES_LEAK_TEST_VAL0 LIKE '%$Search%' OR\r\n        RAD_VAL_NOM_FILL_AMOUNT_VAL0 LIKE '%$Search%' OR\r\n        RAD_VAL_RES_FILL_AMOUNT_VAL0 LIKE '%$Search%' OR\r\n        RAD_CYCLE_RESULT_VAL0 LIKE '%$Search%'\r\n    )\r\n    AND RAD_TYPE_NAME_VAL0 IN ($type_name)\r\n    AND RAD_CYCLE_RESULT_VAL0 IN ($cycle_result);",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "RAD Median",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "mssql",
+        "uid": "cdrb28jbjka9sb"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "RAD_VAL_NOM_FINE_VAC_VAL0"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Nominal Fine Vacuum"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "RAD_VAL_RES_FINE_VAC_VAL0"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Result Fine Vacuum"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "RAD_VAL_NOM_LEAK_TEST_VAL0"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Nominal Leak Test"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "RAD_VAL_RES_LEAK_TEST_VAL0"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Result Leak Test"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "RAD_VAL_NOM_FILL_AMOUNT_VAL0"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Nominal Fill Amount"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "RAD_VAL_RES_FILL_AMOUNT_VAL0"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Result Fill Amount"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "RAD_CYCLE_RESULT_VAL0"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Radiator Cycle Result"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "timestamp_utc"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Time"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "RAD_TYPE_NAME_VAL0"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Type Name"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "RAD_VIN_VAL0"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "VIN"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 75
+      },
+      "id": 23,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "11.1.0",
+      "targets": [
+        {
+          "dataset": "SGMW_GA_PMC",
+          "datasource": {
+            "type": "mssql",
+            "uid": "cdrb28jbjka9sb"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT\r\n    timestamp_utc,\r\n    RAD_TYPE_NAME_VAL0,\r\n    RAD_VIN_VAL0,\r\n    RAD_VAL_NOM_FINE_VAC_VAL0,\r\n    RAD_VAL_RES_FINE_VAC_VAL0,\r\n    RAD_VAL_NOM_LEAK_TEST_VAL0,\r\n    RAD_VAL_RES_LEAK_TEST_VAL0,\r\n    RAD_VAL_NOM_FILL_AMOUNT_VAL0,\r\n    RAD_VAL_RES_FILL_AMOUNT_VAL0,\r\n    RAD_CYCLE_RESULT_VAL0\r\nFROM \r\n    dbo.COMPLINE_RAD1\r\nWHERE \r\n    timestamp_utc BETWEEN $__timeFrom() AND $__timeTo()\r\n    AND (\r\n        RAD_TYPE_NAME_VAL0 LIKE '%$Search%' OR\r\n        RAD_VIN_VAL0 LIKE '%$Search%' OR\r\n        RAD_VAL_NOM_FINE_VAC_VAL0 LIKE '%$Search%' OR\r\n        RAD_VAL_RES_FINE_VAC_VAL0 LIKE '%$Search%' OR\r\n        RAD_VAL_NOM_LEAK_TEST_VAL0 LIKE '%$Search%' OR\r\n        RAD_VAL_RES_LEAK_TEST_VAL0 LIKE '%$Search%' OR\r\n        RAD_VAL_NOM_FILL_AMOUNT_VAL0 LIKE '%$Search%' OR\r\n        RAD_VAL_RES_FILL_AMOUNT_VAL0 LIKE '%$Search%' OR\r\n        RAD_CYCLE_RESULT_VAL0 LIKE '%$Search%'\r\n    )\r\n    AND RAD_TYPE_NAME_VAL0 IN ($type_name)\r\n    AND RAD_CYCLE_RESULT_VAL0 IN ($cycle_result)\r\nORDER BY \r\n    timestamp_utc DESC;",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Compline Radiator",
+      "transformations": [
+        {
+          "id": "filterByValue",
+          "options": {}
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "mssql",
+        "uid": "cdrb28jbjka9sb"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Nominal"
+            },
+            "properties": [
+              {
+                "id": "custom.lineStyle",
+                "value": {
+                  "dash": [
+                    10,
+                    10
+                  ],
+                  "fill": "dash"
+                }
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "yellow",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Result"
+            },
+            "properties": [
+              {
+                "id": "custom.fillOpacity",
+                "value": 20
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 83
+      },
+      "id": 18,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "dataset": "SGMW_GA_PMC",
+          "datasource": {
+            "type": "mssql",
+            "uid": "cdrb28jbjka9sb"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT \r\n    RAD_VAL_NOM_FINE_VAC_VAL0 As Nominal, \r\n    RAD_VAL_RES_FINE_VAC_VAL0 As Result,\r\n    RAD_TYPE_NAME_VAL0 As Type,\r\n    RAD_VIN_VAL0 As VIN,\r\n    timestamp_utc\r\nFROM \r\n    SGMW_GA_PMC.dbo.COMPLINE_RAD1\r\nWHERE \r\n    $__timeFilter(timestamp_utc)\r\n    AND (COALESCE('${Search}', '') = '' OR RAD_TYPE_NAME_VAL0 = '${Search}')\r\n    AND RAD_TYPE_NAME_VAL0 IN ($type_name)\r\n    AND RAD_CYCLE_RESULT_VAL0 IN ($cycle_result)\r\nORDER BY \r\n    timestamp_utc DESC\r\n",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Radiator Fine Vacuum",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "mssql",
+        "uid": "cdrb28jbjka9sb"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Nominal"
+            },
+            "properties": [
+              {
+                "id": "custom.lineStyle",
+                "value": {
+                  "dash": [
+                    10,
+                    10
+                  ],
+                  "fill": "dash"
+                }
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "yellow",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Result"
+            },
+            "properties": [
+              {
+                "id": "custom.fillOpacity",
+                "value": 20
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 83
+      },
+      "id": 19,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "dataset": "SGMW_GA_PMC",
+          "datasource": {
+            "type": "mssql",
+            "uid": "cdrb28jbjka9sb"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT \r\n    RAD_VAL_NOM_LEAK_TEST_VAL0 As Nominal, \r\n    RAD_VAL_RES_LEAK_TEST_VAL0 As Result,\r\n    RAD_TYPE_NAME_VAL0 As Type,\r\n    RAD_VIN_VAL0 As VIN,\r\n    timestamp_utc\r\nFROM \r\n    SGMW_GA_PMC.dbo.COMPLINE_RAD1\r\nWHERE \r\n    $__timeFilter(timestamp_utc)\r\n    AND (COALESCE('${Search}', '') = '' OR RAD_TYPE_NAME_VAL0 = '${Search}')\r\n    AND RAD_TYPE_NAME_VAL0 IN ($type_name)\r\n    AND RAD_CYCLE_RESULT_VAL0 IN ($cycle_result)\r\nORDER BY \r\n    timestamp_utc DESC\r\n",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Radiator Leak Test",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "mssql",
+        "uid": "cdrb28jbjka9sb"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Nominal"
+            },
+            "properties": [
+              {
+                "id": "custom.lineStyle",
+                "value": {
+                  "dash": [
+                    10,
+                    10
+                  ],
+                  "fill": "dash"
+                }
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "yellow",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Result"
+            },
+            "properties": [
+              {
+                "id": "custom.fillOpacity",
+                "value": 20
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 91
+      },
+      "id": 20,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "dataset": "SGMW_GA_PMC",
+          "datasource": {
+            "type": "mssql",
+            "uid": "cdrb28jbjka9sb"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT \r\n    RAD_VAL_NOM_FILL_AMOUNT_VAL0 As Nominal, \r\n    RAD_VAL_RES_FILL_AMOUNT_VAL0 As Result,\r\n    RAD_TYPE_NAME_VAL0 As Type,\r\n    RAD_VIN_VAL0 As VIN, \r\n    timestamp_utc\r\nFROM \r\n    SGMW_GA_PMC.dbo.COMPLINE_RAD1\r\nWHERE \r\n    $__timeFilter(timestamp_utc)\r\n    AND (COALESCE('${Search}', '') = '' OR RAD_TYPE_NAME_VAL0 = '${Search}')\r\n    AND RAD_TYPE_NAME_VAL0 IN ($type_name)\r\n    AND RAD_CYCLE_RESULT_VAL0 IN ($cycle_result)\r\nORDER BY \r\n    timestamp_utc DESC\r\n",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Radiator Filling Amount",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "mssql",
+        "uid": "cdrb28jbjka9sb"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "fillOpacity": 80,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Total Result"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 91
+      },
+      "id": 26,
+      "options": {
+        "barRadius": 0,
+        "barWidth": 0.97,
+        "fullHighlight": false,
+        "groupWidth": 0.7,
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "orientation": "horizontal",
+        "showValue": "auto",
+        "stacking": "none",
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        },
+        "xTickLabelRotation": 0,
+        "xTickLabelSpacing": 0
+      },
+      "targets": [
+        {
+          "dataset": "SGMW_GA_PMC",
+          "datasource": {
+            "type": "mssql",
+            "uid": "cdrb28jbjka9sb"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT \r\n    Result_Description,\r\n    COUNT(*) AS Total_Count\r\nFROM (\r\n    SELECT \r\n        RAD_TYPE_NAME_VAL0,\r\n        RAD_CYCLE_RESULT_VAL0,\r\n        CASE RAD_CYCLE_RESULT_VAL0\r\n            WHEN 1 THEN 'Process OK'\r\n            WHEN 10 THEN 'N.O.K. SYSTEM VACUUM'\r\n            WHEN 11 THEN 'N.O.K. TEST ADAPTER VALVE'\r\n            WHEN 20 THEN 'N.O.K. OVERPRESSURE'\r\n            WHEN 21 THEN 'N.O.K. ADAPTER NOT CLAMPED - VACUUM'\r\n            WHEN 22 THEN 'N.O.K. ADAPTER NOT CLAMPED - POSITION'\r\n            WHEN 23 THEN 'N.O.K. OPEN CAR VALVES'\r\n            WHEN 24 THEN 'N.O.K. PUSH ROD VALVE'\r\n            WHEN 30 THEN 'N.O.K. PRESSURE BUILT-UP'\r\n            WHEN 31 THEN 'N.O.K. PRESSURE LEAK'\r\n            WHEN 32 THEN 'N.O.K. PRESSURE EXHAUST'\r\n            WHEN 33 THEN 'N.O.K. PRESSURE STABILISATION'\r\n            WHEN 34 THEN 'N.O.K. TEST PRESSURE INCREASE IN TANK'\r\n            WHEN 35 THEN 'N.O.K. TANK PRESSURE LIMITS'\r\n            WHEN 40 THEN 'N.O.K. COARSE VACUUM'\r\n            WHEN 41 THEN 'N.O.K. FINE VACUUM'\r\n            WHEN 42 THEN 'N.O.K. VACUUM LEAK TEST'\r\n            WHEN 43 THEN 'N.O.K. POST VACUUM'\r\n            WHEN 44 THEN 'N.O.K. VACUUM TOO QUICK'\r\n            WHEN 45 THEN 'N.O.K. VACUUM STABILISATION'\r\n            WHEN 50 THEN 'N.O.K. FILL PRESSURE'\r\n            WHEN 51 THEN 'N.O.K. FILL AMOUNT'\r\n            WHEN 52 THEN 'N.O.K. FILL TIME'\r\n            WHEN 53 THEN 'N.O.K. FILL ADDI. MEDIUM'\r\n            WHEN 54 THEN 'N.O.K. FILL PRESSURE DECAY'\r\n            WHEN 55 THEN 'N.O.K. TANK PRESSURE'\r\n            WHEN 56 THEN 'N.O.K. FILL TIME AUX. RESERVOIR'\r\n            WHEN 57 THEN 'N.O.K. FILL AMOUNT AUX. RESERVOIR'\r\n            WHEN 58 THEN 'N.O.K. RESIDUAL AIR'\r\n            WHEN 59 THEN 'N.O.K. COUNTER NOT RUNNING'\r\n            WHEN 60 THEN 'N.O.K. COUNTER NOT STANDING STILL'\r\n            WHEN 61 THEN 'N.O.K. LEAK TEST FILL VALVES'\r\n            WHEN 62 THEN 'N.O.K. LEAK TEST CAR VALVES'\r\n            WHEN 63 THEN 'N.O.K. RESET COUNTER'\r\n            WHEN 64 THEN 'N.O.K. RESET COUNTER EXT. RES.'\r\n            WHEN 65 THEN 'N.O.K. FILLING PRESSURE 1'\r\n            WHEN 66 THEN 'N.O.K. FILLING HIGH PRESSURE'\r\n            WHEN 67 THEN 'N.O.K. FILLING PRESSURE 2'\r\n            WHEN 68 THEN 'N.O.K. FILLING DOSING'\r\n            WHEN 69 THEN 'N.O.K. MAX. FILLING VOLUME'\r\n            WHEN 70 THEN 'N.O.K. FILLING PRE STEP'\r\n            WHEN 80 THEN 'N.O.K. ABS FAULT'\r\n            WHEN 81 THEN 'N.O.K. ABS COMMUNICATION'\r\n            WHEN 82 THEN 'N.O.K. ABS SWITCHING NOT STARTED'\r\n            WHEN 83 THEN 'N.O.K. ABS SWITCHING STOPPED IN VACUUM'\r\n            WHEN 84 THEN 'N.O.K. ABS SWITCHING STOPPED IN FILLING'\r\n            WHEN 85 THEN 'N.O.K. ABS SWITCHING STOPPED IN VACUUM (TRW1)'\r\n            WHEN 86 THEN 'N.O.K. ABS SWITCHING STOPPED IN VACUUM (TRW2)'\r\n            WHEN 87 THEN 'N.O.K. CYCLE INTERRUPT FROM VPORT'\r\n            WHEN 88 THEN 'N.O.K. ABS END MISSING'\r\n            WHEN 89 THEN 'N.O.K. ABS FROM VPORT'\r\n            WHEN 90 THEN 'N.O.K. (VPORT) BCM NOT ACTIVATED'\r\n            WHEN 91 THEN 'ERROR WRONG ABS MODULE'\r\n            WHEN 92 THEN 'ERROR CLUTCH NOT IN HOME POSITION'\r\n            WHEN 96 THEN 'N.O.K. WITHOUT FILL'\r\n            WHEN 97 THEN 'N.O.K. COUNTER MODULE'\r\n            WHEN 98 THEN 'N.O.K. USER STOP'\r\n            WHEN 99 THEN 'N.O.K. EQUIPMENT ERROR'\r\n            WHEN 101 THEN 'ERROR SYSTEM VACUUM'\r\n            WHEN 102 THEN 'ERROR ADAPTER VALVE'\r\n            WHEN 103 THEN 'N.O.K. WATER CONTENT'\r\n            WHEN 104 THEN 'ERROR LEAKTEST AT START ON'\r\n            WHEN 105 THEN 'ADD. VACUUM - AERATION'\r\n            WHEN 110 THEN 'ONLY PAG-OIL FILLING SELECTED!'\r\n            WHEN 111 THEN 'PAG-OIL FILLING FINISHED - CONFIRM CLEANING!'\r\n            WHEN 112 THEN 'PAG-OIL FINISHED - PRESS AD. START TO CLEAN ADAPTER!'\r\n            ELSE 'UNKNOWN'\r\n        END AS Result_Description\r\n    FROM dbo.COMPLINE_RAD1\r\n    WHERE $__timeFilter(timestamp_utc)\r\n      AND (COALESCE('${Search}', '') = '' OR RAD_TYPE_NAME_VAL0 = '${Search}')\r\n      AND RAD_TYPE_NAME_VAL0 IN ($type_name)\r\n      AND RAD_CYCLE_RESULT_VAL0 IN ($cycle_result)\r\n) AS Results\r\nGROUP BY Result_Description\r\nORDER BY Total_Count DESC;",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Radiator Cycle Result",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "FaultValue": true
+            },
+            "includeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "FaultName": "Fault Name",
+              "Result_Description": "Result Description",
+              "TotalCount": "Total Fault",
+              "Total_Count": "Total Result"
+            }
+          }
+        }
+      ],
+      "type": "barchart"
+    }
+  ],
+  "schemaVersion": 39,
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "selected": true,
+          "text": "",
+          "value": ""
+        },
+        "description": "Search by Type Name or VIN",
+        "hide": 0,
+        "label": "",
+        "name": "Search",
+        "options": [
+          {
+            "selected": true,
+            "text": "",
+            "value": ""
+          }
+        ],
+        "query": "",
+        "skipUrlSync": false,
+        "type": "textbox"
+      },
+      {
+        "allValue": "",
+        "current": {
+          "selected": false,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": {
+          "type": "mssql",
+          "uid": "cdrb28jbjka9sb"
+        },
+        "definition": "SELECT DISTINCT TYPE_NAME_VAL0 AS type_name\nFROM dbo.COMPLINE_BK\nWHERE TYPE_NAME_VAL0 IS NOT NULL\n\nUNION\n\nSELECT DISTINCT AC_TYPE_NAME_VAL0 AS type_name\nFROM dbo.COMPLINE_AC\nWHERE AC_TYPE_NAME_VAL0 IS NOT NULL\n\nUNION\n\nSELECT DISTINCT RAD_TYPE_NAME_VAL0 AS type_name\nFROM dbo.COMPLINE_RAD1\nWHERE RAD_TYPE_NAME_VAL0 IS NOT NULL;\n\n",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Type Name",
+        "multi": true,
+        "name": "type_name",
+        "options": [],
+        "query": "SELECT DISTINCT TYPE_NAME_VAL0 AS type_name\nFROM dbo.COMPLINE_BK\nWHERE TYPE_NAME_VAL0 IS NOT NULL\n\nUNION\n\nSELECT DISTINCT AC_TYPE_NAME_VAL0 AS type_name\nFROM dbo.COMPLINE_AC\nWHERE AC_TYPE_NAME_VAL0 IS NOT NULL\n\nUNION\n\nSELECT DISTINCT RAD_TYPE_NAME_VAL0 AS type_name\nFROM dbo.COMPLINE_RAD1\nWHERE RAD_TYPE_NAME_VAL0 IS NOT NULL;\n\n",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "allValue": "",
+        "current": {
+          "selected": true,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": {
+          "type": "mssql",
+          "uid": "cdrb28jbjka9sb"
+        },
+        "definition": "SELECT DISTINCT BK_CYCLE_RESULT_VAL0 AS cycle_result\nFROM dbo.COMPLINE_BK\nWHERE  BK_CYCLE_RESULT_VAL0 IS NOT NULL\n\nUNION\n\nSELECT DISTINCT AC_CYCLE_RESULT_VAL0 AS cycle_result\nFROM dbo.COMPLINE_AC\nWHERE AC_CYCLE_RESULT_VAL0 IS NOT NULL\n\nUNION\n\nSELECT DISTINCT RAD_CYCLE_RESULT_VAL0 AS cycle_result\nFROM dbo.COMPLINE_RAD1\nWHERE RAD_CYCLE_RESULT_VAL0 IS NOT NULL;",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Cycle Result",
+        "multi": true,
+        "name": "cycle_result",
+        "options": [],
+        "query": "SELECT DISTINCT BK_CYCLE_RESULT_VAL0 AS cycle_result\nFROM dbo.COMPLINE_BK\nWHERE  BK_CYCLE_RESULT_VAL0 IS NOT NULL\n\nUNION\n\nSELECT DISTINCT AC_CYCLE_RESULT_VAL0 AS cycle_result\nFROM dbo.COMPLINE_AC\nWHERE AC_CYCLE_RESULT_VAL0 IS NOT NULL\n\nUNION\n\nSELECT DISTINCT RAD_CYCLE_RESULT_VAL0 AS cycle_result\nFROM dbo.COMPLINE_RAD1\nWHERE RAD_CYCLE_RESULT_VAL0 IS NOT NULL;",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 3,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "View",
+          "value": "View"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "label": "Result Code (View Only)",
+        "multi": false,
+        "name": "result_code",
+        "options": [
+          {
+            "selected": true,
+            "text": "View",
+            "value": "View"
+          },
+          {
+            "selected": false,
+            "text": "Process OK: 1",
+            "value": "Process OK: 1"
+          },
+          {
+            "selected": false,
+            "text": "N.O.K. SYSTEM VACUUM: 10",
+            "value": "N.O.K. SYSTEM VACUUM: 10"
+          },
+          {
+            "selected": false,
+            "text": "N.O.K. TEST ADAPTER VALVE: 11",
+            "value": "N.O.K. TEST ADAPTER VALVE: 11"
+          },
+          {
+            "selected": false,
+            "text": "N.O.K. OVERPRESSURE: 20",
+            "value": "N.O.K. OVERPRESSURE: 20"
+          },
+          {
+            "selected": false,
+            "text": "N.O.K. ADAPTER NOT CLAMPED - VACUUM: 21",
+            "value": "N.O.K. ADAPTER NOT CLAMPED - VACUUM: 21"
+          },
+          {
+            "selected": false,
+            "text": "N.O.K. ADAPTER NOT CLAMPED - POSITION: 22",
+            "value": "N.O.K. ADAPTER NOT CLAMPED - POSITION: 22"
+          },
+          {
+            "selected": false,
+            "text": "N.O.K. OPEN CAR VALVES: 23",
+            "value": "N.O.K. OPEN CAR VALVES: 23"
+          },
+          {
+            "selected": false,
+            "text": "N.O.K. PUSH ROD VALVE: 24",
+            "value": "N.O.K. PUSH ROD VALVE: 24"
+          },
+          {
+            "selected": false,
+            "text": "N.O.K. PRESSURE BUILT-UP: 30",
+            "value": "N.O.K. PRESSURE BUILT-UP: 30"
+          },
+          {
+            "selected": false,
+            "text": "N.O.K. PRESSURE LEAK: 31",
+            "value": "N.O.K. PRESSURE LEAK: 31"
+          },
+          {
+            "selected": false,
+            "text": "N.O.K. PRESSURE EXHAUST: 32",
+            "value": "N.O.K. PRESSURE EXHAUST: 32"
+          },
+          {
+            "selected": false,
+            "text": "N.O.K. PRESSURE STABILISATION: 33",
+            "value": "N.O.K. PRESSURE STABILISATION: 33"
+          },
+          {
+            "selected": false,
+            "text": "N.O.K. TEST PRESSURE INCREASE IN TANK: 34",
+            "value": "N.O.K. TEST PRESSURE INCREASE IN TANK: 34"
+          },
+          {
+            "selected": false,
+            "text": "N.O.K. TANK PRESSURE LIMITS: 35",
+            "value": "N.O.K. TANK PRESSURE LIMITS: 35"
+          },
+          {
+            "selected": false,
+            "text": "N.O.K. COARSE VACUUM: 40",
+            "value": "N.O.K. COARSE VACUUM: 40"
+          },
+          {
+            "selected": false,
+            "text": "N.O.K. FINE VACUUM: 41",
+            "value": "N.O.K. FINE VACUUM: 41"
+          },
+          {
+            "selected": false,
+            "text": "N.O.K. VACUUM LEAK TEST: 42",
+            "value": "N.O.K. VACUUM LEAK TEST: 42"
+          },
+          {
+            "selected": false,
+            "text": "N.O.K. POST VACUUM: 43",
+            "value": "N.O.K. POST VACUUM: 43"
+          },
+          {
+            "selected": false,
+            "text": "N.O.K. VACUUM TOO QUICK: 44",
+            "value": "N.O.K. VACUUM TOO QUICK: 44"
+          },
+          {
+            "selected": false,
+            "text": "N.O.K. VACUUM STABILISATION: 45",
+            "value": "N.O.K. VACUUM STABILISATION: 45"
+          },
+          {
+            "selected": false,
+            "text": "N.O.K. FILL PRESSURE: 50",
+            "value": "N.O.K. FILL PRESSURE: 50"
+          },
+          {
+            "selected": false,
+            "text": "N.O.K. FILL AMOUNT: 51",
+            "value": "N.O.K. FILL AMOUNT: 51"
+          },
+          {
+            "selected": false,
+            "text": "N.O.K. FILL TIME: 52",
+            "value": "N.O.K. FILL TIME: 52"
+          },
+          {
+            "selected": false,
+            "text": "N.O.K. FILL ADDI. MEDIUM: 53",
+            "value": "N.O.K. FILL ADDI. MEDIUM: 53"
+          },
+          {
+            "selected": false,
+            "text": "N.O.K. FILL PRESSURE DECAY: 54",
+            "value": "N.O.K. FILL PRESSURE DECAY: 54"
+          },
+          {
+            "selected": false,
+            "text": "N.O.K. TANK PRESSURE: 55",
+            "value": "N.O.K. TANK PRESSURE: 55"
+          },
+          {
+            "selected": false,
+            "text": "N.O.K. FILL TIME AUX. RESERVOIR: 56",
+            "value": "N.O.K. FILL TIME AUX. RESERVOIR: 56"
+          },
+          {
+            "selected": false,
+            "text": "N.O.K. FILL AMOUNT AUX. RESERVOIR: 57",
+            "value": "N.O.K. FILL AMOUNT AUX. RESERVOIR: 57"
+          },
+          {
+            "selected": false,
+            "text": "N.O.K. RESIDUAL AIR: 58",
+            "value": "N.O.K. RESIDUAL AIR: 58"
+          },
+          {
+            "selected": false,
+            "text": "N.O.K. COUNTER NOT RUNNING: 59",
+            "value": "N.O.K. COUNTER NOT RUNNING: 59"
+          },
+          {
+            "selected": false,
+            "text": "N.O.K. COUNTER NOT STANDING STILL: 60",
+            "value": "N.O.K. COUNTER NOT STANDING STILL: 60"
+          },
+          {
+            "selected": false,
+            "text": "N.O.K. LEAK TEST FILL VALVES: 61",
+            "value": "N.O.K. LEAK TEST FILL VALVES: 61"
+          },
+          {
+            "selected": false,
+            "text": "N.O.K. LEAK TEST CAR VALVES: 62",
+            "value": "N.O.K. LEAK TEST CAR VALVES: 62"
+          },
+          {
+            "selected": false,
+            "text": "N.O.K. RESET COUNTER: 63",
+            "value": "N.O.K. RESET COUNTER: 63"
+          },
+          {
+            "selected": false,
+            "text": "N.O.K. RESET COUNTER EXT. RES.: 64",
+            "value": "N.O.K. RESET COUNTER EXT. RES.: 64"
+          },
+          {
+            "selected": false,
+            "text": "N.O.K. FILLING PRESSURE 1: 65",
+            "value": "N.O.K. FILLING PRESSURE 1: 65"
+          },
+          {
+            "selected": false,
+            "text": "N.O.K. FILLING HIGH PRESSURE: 66",
+            "value": "N.O.K. FILLING HIGH PRESSURE: 66"
+          },
+          {
+            "selected": false,
+            "text": "N.O.K. FILLING PRESSURE 2: 67",
+            "value": "N.O.K. FILLING PRESSURE 2: 67"
+          },
+          {
+            "selected": false,
+            "text": "N.O.K. FILLING DOSING: 68",
+            "value": "N.O.K. FILLING DOSING: 68"
+          },
+          {
+            "selected": false,
+            "text": "N.O.K. MAX. FILLING VOLUME: 69",
+            "value": "N.O.K. MAX. FILLING VOLUME: 69"
+          },
+          {
+            "selected": false,
+            "text": "N.O.K. FILLING PRE STEP: 70",
+            "value": "N.O.K. FILLING PRE STEP: 70"
+          },
+          {
+            "selected": false,
+            "text": "N.O.K. ABS FAULT: 80",
+            "value": "N.O.K. ABS FAULT: 80"
+          },
+          {
+            "selected": false,
+            "text": "N.O.K. ABS COMMUNICATION: 81",
+            "value": "N.O.K. ABS COMMUNICATION: 81"
+          },
+          {
+            "selected": false,
+            "text": "N.O.K. ABS SWITCHING NOT STARTED: 82",
+            "value": "N.O.K. ABS SWITCHING NOT STARTED: 82"
+          },
+          {
+            "selected": false,
+            "text": "N.O.K. ABS SWITCHING STOPPED IN VACUUM: 83",
+            "value": "N.O.K. ABS SWITCHING STOPPED IN VACUUM: 83"
+          },
+          {
+            "selected": false,
+            "text": "N.O.K. ABS SWITCHING STOPPED IN FILLING: 84",
+            "value": "N.O.K. ABS SWITCHING STOPPED IN FILLING: 84"
+          },
+          {
+            "selected": false,
+            "text": "N.O.K. ABS SWITCHING STOPPED IN VACUUM (TRW1): 85",
+            "value": "N.O.K. ABS SWITCHING STOPPED IN VACUUM (TRW1): 85"
+          },
+          {
+            "selected": false,
+            "text": "N.O.K. ABS SWITCHING STOPPED IN VACUUM (TRW2): 86",
+            "value": "N.O.K. ABS SWITCHING STOPPED IN VACUUM (TRW2): 86"
+          },
+          {
+            "selected": false,
+            "text": "N.O.K. CYCLE INTERRUPT FROM VPORT: 87",
+            "value": "N.O.K. CYCLE INTERRUPT FROM VPORT: 87"
+          },
+          {
+            "selected": false,
+            "text": "N.O.K. ABS END MISSING: 88",
+            "value": "N.O.K. ABS END MISSING: 88"
+          },
+          {
+            "selected": false,
+            "text": "N.O.K. ABS FROM VPORT: 89",
+            "value": "N.O.K. ABS FROM VPORT: 89"
+          },
+          {
+            "selected": false,
+            "text": "N.O.K. (VPORT) BCM NOT ACTIVATED: 90",
+            "value": "N.O.K. (VPORT) BCM NOT ACTIVATED: 90"
+          },
+          {
+            "selected": false,
+            "text": "ERROR WRONG ABS MODULE: 91",
+            "value": "ERROR WRONG ABS MODULE: 91"
+          },
+          {
+            "selected": false,
+            "text": "ERROR CLUTCH NOT IN HOME POSITION: 92",
+            "value": "ERROR CLUTCH NOT IN HOME POSITION: 92"
+          },
+          {
+            "selected": false,
+            "text": "N.O.K. WITHOUT FILL: 96",
+            "value": "N.O.K. WITHOUT FILL: 96"
+          },
+          {
+            "selected": false,
+            "text": "N.O.K. COUNTER MODULE: 97",
+            "value": "N.O.K. COUNTER MODULE: 97"
+          },
+          {
+            "selected": false,
+            "text": "N.O.K. USER STOP: 98",
+            "value": "N.O.K. USER STOP: 98"
+          },
+          {
+            "selected": false,
+            "text": "N.O.K. EQUIPMENT ERROR: 99",
+            "value": "N.O.K. EQUIPMENT ERROR: 99"
+          },
+          {
+            "selected": false,
+            "text": "ERROR SYSTEM VACUUM: 101",
+            "value": "ERROR SYSTEM VACUUM: 101"
+          },
+          {
+            "selected": false,
+            "text": "ERROR ADAPTER VALVE: 102",
+            "value": "ERROR ADAPTER VALVE: 102"
+          },
+          {
+            "selected": false,
+            "text": "N.O.K. WATER CONTENT: 103",
+            "value": "N.O.K. WATER CONTENT: 103"
+          },
+          {
+            "selected": false,
+            "text": "ERROR LEAKTEST AT START ON: 104",
+            "value": "ERROR LEAKTEST AT START ON: 104"
+          },
+          {
+            "selected": false,
+            "text": "ADD. VACUUM - AERATION: 105",
+            "value": "ADD. VACUUM - AERATION: 105"
+          },
+          {
+            "selected": false,
+            "text": "ONLY PAG-OIL FILLING SELECTED!: 110",
+            "value": "ONLY PAG-OIL FILLING SELECTED!: 110"
+          },
+          {
+            "selected": false,
+            "text": "PAG-OIL FILLING FINISHED - CONFIRM CLEANING!: 111",
+            "value": "PAG-OIL FILLING FINISHED - CONFIRM CLEANING!: 111"
+          },
+          {
+            "selected": false,
+            "text": "PAG-OIL FINISHED - PRESS AD. START TO CLEAN ADAPTER!: 112",
+            "value": "PAG-OIL FINISHED - PRESS AD. START TO CLEAN ADAPTER!: 112"
+          }
+        ],
+        "query": "View, Process OK: 1, N.O.K. SYSTEM VACUUM: 10, N.O.K. TEST ADAPTER VALVE: 11, N.O.K. OVERPRESSURE: 20, N.O.K. ADAPTER NOT CLAMPED - VACUUM: 21, N.O.K. ADAPTER NOT CLAMPED - POSITION: 22, N.O.K. OPEN CAR VALVES: 23, N.O.K. PUSH ROD VALVE: 24, N.O.K. PRESSURE BUILT-UP: 30, N.O.K. PRESSURE LEAK: 31, N.O.K. PRESSURE EXHAUST: 32, N.O.K. PRESSURE STABILISATION: 33, N.O.K. TEST PRESSURE INCREASE IN TANK: 34, N.O.K. TANK PRESSURE LIMITS: 35, N.O.K. COARSE VACUUM: 40, N.O.K. FINE VACUUM: 41, N.O.K. VACUUM LEAK TEST: 42, N.O.K. POST VACUUM: 43, N.O.K. VACUUM TOO QUICK: 44, N.O.K. VACUUM STABILISATION: 45, N.O.K. FILL PRESSURE: 50, N.O.K. FILL AMOUNT: 51, N.O.K. FILL TIME: 52, N.O.K. FILL ADDI. MEDIUM: 53, N.O.K. FILL PRESSURE DECAY: 54, N.O.K. TANK PRESSURE: 55, N.O.K. FILL TIME AUX. RESERVOIR: 56, N.O.K. FILL AMOUNT AUX. RESERVOIR: 57, N.O.K. RESIDUAL AIR: 58, N.O.K. COUNTER NOT RUNNING: 59, N.O.K. COUNTER NOT STANDING STILL: 60, N.O.K. LEAK TEST FILL VALVES: 61, N.O.K. LEAK TEST CAR VALVES: 62, N.O.K. RESET COUNTER: 63, N.O.K. RESET COUNTER EXT. RES.: 64, N.O.K. FILLING PRESSURE 1: 65, N.O.K. FILLING HIGH PRESSURE: 66, N.O.K. FILLING PRESSURE 2: 67, N.O.K. FILLING DOSING: 68, N.O.K. MAX. FILLING VOLUME: 69, N.O.K. FILLING PRE STEP: 70, N.O.K. ABS FAULT: 80, N.O.K. ABS COMMUNICATION: 81, N.O.K. ABS SWITCHING NOT STARTED: 82, N.O.K. ABS SWITCHING STOPPED IN VACUUM: 83, N.O.K. ABS SWITCHING STOPPED IN FILLING: 84, N.O.K. ABS SWITCHING STOPPED IN VACUUM (TRW1): 85, N.O.K. ABS SWITCHING STOPPED IN VACUUM (TRW2): 86, N.O.K. CYCLE INTERRUPT FROM VPORT: 87, N.O.K. ABS END MISSING: 88, N.O.K. ABS FROM VPORT: 89, N.O.K. (VPORT) BCM NOT ACTIVATED: 90, ERROR WRONG ABS MODULE: 91, ERROR CLUTCH NOT IN HOME POSITION: 92, N.O.K. WITHOUT FILL: 96, N.O.K. COUNTER MODULE: 97, N.O.K. USER STOP: 98, N.O.K. EQUIPMENT ERROR: 99, ERROR SYSTEM VACUUM: 101, ERROR ADAPTER VALVE: 102, N.O.K. WATER CONTENT: 103, ERROR LEAKTEST AT START ON: 104, ADD. VACUUM - AERATION: 105, ONLY PAG-OIL FILLING SELECTED!: 110, PAG-OIL FILLING FINISHED - CONFIRM CLEANING!: 111, PAG-OIL FINISHED - PRESS AD. START TO CLEAN ADAPTER!: 112",
+        "queryValue": "",
+        "skipUrlSync": false,
+        "type": "custom"
+      }
+    ]
+  },
+  "time": {
+    "from": "2024-08-26T17:00:00.000Z",
+    "to": "2024-08-27T10:00:00.000Z"
+  },
+  "timepicker": {},
+  "timezone": "Asia/Jakarta",
+  "title": "Filling Machine Real Time Data Visualization",
+  "uid": "cdrb9wyezu874b",
+  "version": 68,
+  "weekStart": ""
+}
